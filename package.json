@@ -1,0 +1,30 @@
+{
+  "name": "mappe",
+  "version": "0.1.0",
+  "description": "Manage your app structure based on components",
+  "preferGlobal": true,
+  "bin": {
+    "mappe": "bin/index.js"
+  },
+  "scripts": {
+    "test": "sh test/test.sh"
+  },
+  "devDependencies": {
+    "mocha": "*",
+    "should": "*"
+  },
+  "keywords": [
+    "scaffolding",
+    "structure"
+  ],
+  "author": {
+    "email": "elenatorro@gmail.com",
+    "name": "Elena Torro",
+    "url": "https://github.com/elenatorro"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "fs-extra": "^0.23.1",
+    "meow": "^3.3.0"
+  }
+}
