@@ -1,6 +1,9 @@
-var Mappe = require('../src/Mappe');
 var should = require("should");
-var mappe = new Mappe();
+var fse = require('fs-extra');
+var fs = require('fs');
+
+var Mappe  = require('../src/Mappe');
+var mappe  = new Mappe();
 
 describe('Create Mappe object: ', function(){
 	it('should return a Mappe object when creating one', function(){
@@ -16,8 +19,17 @@ describe('Create Mappe object: ', function(){
 	  mappe.config.test.should.be.true;
 	})
 
-	it('should load the content of a json file', function(){
+	it('should generate a modular folder with the default configuration', function(){
 	  mappe.loadConfig('./test/config.json');
 	  mappe.generate('index');
+	  fs.exists('./index', function(exists) {
+	  	exists.should.be.true;
+	  });
+	  fs.exists('./index/index.js', function(exists) {
+	  	exists.should.be.true;
+	  });
+	  fs.exists('./index/index.css', function(exists) {
+	  	exists.should.be.true;
+	  });
 	})
 })
