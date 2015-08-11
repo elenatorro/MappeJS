@@ -16,6 +16,9 @@ var command = cli.input.shift();
 var commands = {
 	generate: function() {
 		mappe.generate(cli.input[0])
+	},
+	define: function() {
+		mappe.define(cli.input[0], cli.input[1])
 	}
 };
 
