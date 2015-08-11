@@ -14,13 +14,14 @@ describe('Create Mappe object: ', function(){
 	  mappe.loadConfig.should.be.ok;
 	})
 
-	it('should load the content of a json file', function(){
-	  mappe.loadConfig('./test/test.json');
+	it('should load the content of a json file', function() {
+	  mappe.setConfigPath('./test/test.json');
+	  mappe.loadConfig();
 	  mappe.config.test.should.be.true;
 	})
 
-	it('should generate a modular folder with the default configuration', function(){
-	  mappe.loadConfig('./test/config.json');
+	it('should generate a modular folder with the default configuration', function() {
+	  mappe.setConfigPath('./test/config.json');
 	  mappe.generate('index');
 	  fs.exists('./index', function(exists) {
 	  	exists.should.be.true;
@@ -31,5 +32,13 @@ describe('Create Mappe object: ', function(){
 	  fs.exists('./index/index.css', function(exists) {
 	  	exists.should.be.true;
 	  });
+	})
+})
+
+describe('Create components: ', function(){
+	it('should define a mappe component called "box"', function(){
+	  mappe.setConfigPath('./test/mappe.json');
+	  mappe.define('box', 'default');
+	  mappe.config.components.box.should.be.ok;
 	})
 })

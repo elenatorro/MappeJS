@@ -1,0 +1,10 @@
+{
+  "default": [
+    "js",
+    "css"
+  ],
+  "components": {
+    "name": "default",
+    "box": "default"
+  }
+}
