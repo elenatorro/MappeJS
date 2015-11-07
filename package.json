@@ -1,6 +1,6 @@
 {
   "name": "mappe",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Manage your app structure based on components",
   "preferGlobal": true,
   "bin": {

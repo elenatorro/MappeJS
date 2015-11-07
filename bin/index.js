@@ -15,10 +15,23 @@ var command = cli.input.shift();
 
 var commands = {
 	generate: function() {
-		mappe.generate(cli.input[0])
+		mappe.generate(cli.input[0]);
 	},
 	define: function() {
-		mappe.define(cli.input[0], cli.input[1])
+		mappe.define(cli.input[0], cli.input[1]);
+	},
+	add: {
+		config: function() {
+			mappe.setConfigPath(cli.input[0]);
+		},
+		default: function() {
+			mappe.setDefaultConfig();
+		}
+	},
+	load: {
+		config: function() {
+			mappe.loadConfig();
+		}
 	}
 };
 

@@ -1,9 +1,8 @@
 {
   "default": [
-    "js",
+    "coffee",
     "css"
   ],
   "components": {
-    "box": "default"
   }
 }

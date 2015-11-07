@@ -1,1 +1,1 @@
-module.exports = require('lib/Mappe');
+module.exports = require('src/Mappe');

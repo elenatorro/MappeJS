@@ -10,18 +10,24 @@ var Mappe = (function() {
 
 	Mappe.prototype.loadConfig = function() {
 		var configPath = this.configPath;
-		var config = fs.readJsonSync(configPath, {throws: false});
+		try {
+			var config = fs.readJsonSync(configPath, {throws: false});
+		} catch (error) {
+			console.log('There was a problem with your config path file.');
+			console.log('Config path: ', configPath);
+		}
 		return this.setConfig(config);
 	};
 
 	Mappe.prototype.setConfigPath = function(configPath) {
-		this.configPath = configPath;
+		this.configPath = configPath || 'mappe.json';
+		this.loadConfig();
 		return this;
 	}
 
 	Mappe.prototype.saveConfig = function() {
 		var config = this.config;
-		var configPath = this.configPath;
+		var configPath = this.configPath || 'mappe.json';
 		fs.writeJsonSync(configPath, config, {throws: false});
 		return this;
 	};
@@ -35,10 +41,22 @@ var Mappe = (function() {
 		this.loadConfig();
 		var path = './' + name;
 		fs.mkdirsSync(path);
-		this.config.default.forEach(function (extension) {
-			fs.writeFileSync(path + '/' + name + '.' + extension, "");
-		})
+		try {
+			this.config.default.forEach(function (extension) {
+				fs.writeFileSync(path + '/' + name + '.' + extension, "");
+			});
+		} catch (error) {
+			var configPath = this.configPath;
+			console.log('There was a problem with your config path file.');
+			console.log('Config path: ', configPath);
+		}
+
 		return this;
+	};
+
+	Mappe.prototype.setDefaultConfig = function() {
+	  this.config = {"default": ["js","css"],"components": {}};
+	  this.saveConfig();
 	};
 
 	Mappe.prototype.define = function(name, model) {
