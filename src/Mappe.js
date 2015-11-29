@@ -54,8 +54,7 @@
       mappe.read()
       name = mappe.fileName(name, component || 'default')
       fse.mkdirsSync(mappe.path + name)
-      let extension
-      for (extension in mappe.config.components[component || 'default']) {
+      for (var extension in mappe.config.components[component || 'default']) {
         fs.writeFileSync(mappe.path + mappe.filePath(name, extension, component || 'default'), content)
       }
       return 'Component: ' + name + ' generated successfully'
