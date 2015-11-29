@@ -9,9 +9,5 @@
     "default": {
       "js": "default"
     }
-  },
-  "default": {
-    "format": "camelCase",
-    "typeFormat": "lowerCaseFirst"
   }
 }
