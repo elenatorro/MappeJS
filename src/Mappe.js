@@ -1,6 +1,6 @@
 /*! https://elenatorro.github.io/mappe v0.0.1 by elenatorro | MIT license */
-'use strict'
 ;(function () {
+  'use strict'
   const fse = require('fs-extra')
   const fs = require('fs')
   const changeCase = require('change-case')
