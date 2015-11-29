@@ -1,5 +1,4 @@
 #MappeJS
-![Build Status](https://circleci.com/gh/:elenatorro/:mappejs.svg?circle-token=:55f923e6d99d15fde3b6fbd9b8fb33783835f284)
 
 **[Under Construction]**
 
