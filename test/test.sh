@@ -12,4 +12,4 @@ run (){
 
 ## Main
 run \
-test/mappe.test.js
+test/main.test.js

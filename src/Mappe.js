@@ -1,72 +1,94 @@
-'use strict';
+/*! https://elenatorro.github.io/mappe v0.0.1 by elenatorro | MIT license */
+'use strict'
+;(function () {
+  const fse = require('fs-extra')
+  const fs = require('fs')
+  const changeCase = require('change-case')
+  const defaultConfig = {
+    styles: {
+      default: {
+        format: 'camelCase',
+        typeFormat: 'upperCaseFirst'
+      }
+    },
+    components: {
+      default: {
+        js: 'default'
+      }
+    }
+  }
 
-var fs = require('fs-extra');
+  const Mappe = function (path) {
+    const mappe = {}
+    mappe.path = (path || '.') + '/'
+    mappe.version = '0.0.1'
+    mappe.default = 'default'
+    mappe.config = defaultConfig
+    mappe.configPath = mappe.path + 'mappe.json'
 
-var Mappe = (function() {
-	function Mappe() {
-		this.config = null;
-		this.configPath = 'mappe.json';
-	}
+    mappe.read = function () {
+      try {
+        mappe.config = fse.readJsonSync(mappe.configPath, {throws: false}) || {}
+      } catch (error) {
+        mappe.errors[error.code]()
+      }
+      mappe.validConfig(mappe.config)
+      mappe.write()
+    }
 
-	Mappe.prototype.loadConfig = function() {
-		var configPath = this.configPath;
-		try {
-			var config = fs.readJsonSync(configPath, {throws: false});
-		} catch (error) {
-			console.log('There was a problem with your config path file.');
-			console.log('Config path: ', configPath);
-		}
-		return this.setConfig(config);
-	};
+    mappe.setDefault = function (config, property) {
+      mappe.config[property] = config[property] || mappe[property] || defaultConfig[property]
+    }
 
-	Mappe.prototype.setConfigPath = function(configPath) {
-		this.configPath = configPath || 'mappe.json';
-		this.loadConfig();
-		return this;
-	}
+    mappe.validConfig = function (config) {
+      mappe.setDefault(config, 'components')
+      mappe.setDefault(config.components, 'default')
+      mappe.setDefault(config, 'styles')
+      mappe.setDefault(config.styles, 'default')
+    }
 
-	Mappe.prototype.saveConfig = function() {
-		var config = this.config;
-		var configPath = this.configPath || 'mappe.json';
-		fs.writeJsonSync(configPath, config, {throws: false});
-		return this;
-	};
+    mappe.write = function () {
+      fse.writeJsonSync(mappe.configPath, mappe.config)
+    }
 
-	Mappe.prototype.setConfig = function(config) {
-		this.config = config;
-		return this;
-	};
+    mappe.generate = function (name, component, content) {
+      mappe.read()
+      name = mappe.fileName(name, component || 'default')
+      fse.mkdirsSync(mappe.path + name)
+      let extension
+      for (extension in mappe.config.components[component || 'default']) {
+        fs.writeFileSync(mappe.path + mappe.filePath(name, extension, component || 'default'), content)
+      }
+      return 'Component: ' + name + ' generated successfully'
+    }
 
-	Mappe.prototype.generate = function(name) {
-		this.loadConfig();
-		var path = './' + name;
-		fs.mkdirsSync(path);
-		try {
-			this.config.default.forEach(function (extension) {
-				fs.writeFileSync(path + '/' + name + '.' + extension, "");
-			});
-		} catch (error) {
-			var configPath = this.configPath;
-			console.log('There was a problem with your config path file.');
-			console.log('Config path: ', configPath);
-		}
+    mappe.filePath = function (name, extension, component) {
+      return [name, mappe.addExtension(name, extension)].join('/')
+    }
 
-		return this;
-	};
+    mappe.fileName = function (name, component) {
+      name = mappe.changeFormat(name, component)
+      name = mappe.changeTypeFormat(name, component)
+      return name
+    }
 
-	Mappe.prototype.setDefaultConfig = function() {
-	  this.config = {"default": ["js","css"],"components": {}};
-	  this.saveConfig();
-	};
+    mappe.addExtension = function (name, extension) {
+      return [name, extension].join('.')
+    }
+    mappe.changeFormat = function (name, component) {
+      return changeCase[mappe.config.styles[component].format](name)
+    }
 
-	Mappe.prototype.define = function(name, model) {
-		this.loadConfig();
-		this.config.components[name] = model;
-		return this.saveConfig();
-	};
+    mappe.changeTypeFormat = function (name, component) {
+      return changeCase[mappe.config.styles[component].typeFormat](name)
+    }
 
-	return Mappe;
-})();
+    mappe.errors = {
+      'ENOENT': mappe.write
+    }
 
-module.exports = Mappe;
+    return mappe
+  }
 
+  module.exports = Mappe
+}())
