@@ -1,8 +1,17 @@
 {
-  "default": [
-    "js",
-    "css"
-  ],
+  "styles": {
+    "default": {
+      "format": "camelCase",
+      "typeFormat": "lowerCaseFirst"
+    }
+  },
   "components": {
+    "default": {
+      "js": "default"
+    }
+  },
+  "default": {
+    "format": "camelCase",
+    "typeFormat": "lowerCaseFirst"
   }
 }
