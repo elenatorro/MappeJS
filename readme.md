@@ -1,4 +1,4 @@
-#MappeJS
+#MappeJS [![Build Status](https://travis-ci.org/elenatorro/MappeJS.svg?branch=master)](https://travis-ci.org/elenatorro/MappeJS)
 
 **[Under Construction]**
 
