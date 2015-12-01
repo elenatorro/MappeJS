@@ -1,6 +1,6 @@
 {
   "name": "mappe",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Manage your app structure based on components",
   "bin": {
     "mappe": "bin/index.js"
