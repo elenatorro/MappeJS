@@ -5,12 +5,16 @@
   const changeCase = require('change-case')
   const Acho = require('acho')
   const defaultConfig = {
+    default: 'default',
     styles: {
       default: ['camelCase', 'upperCaseFirst']
     },
     components: {
       default: {
-        js: 'default'
+        title: 'default',
+        extensions: {
+          js: 'default'
+        }
       }
     }
   }
@@ -21,7 +25,6 @@
 
     mappe.path = (path || '.') + '/'
     mappe.version = '0.0.1'
-    mappe.default = 'default'
     mappe.config = defaultConfig
     mappe.configPath = mappe.path + 'mappe.json'
 
@@ -37,7 +40,7 @@
     }
 
     mappe.setDefault = function (config, property) {
-      mappe.config[property] = config[property] || mappe[property] || defaultConfig[property]
+      mappe.config[property] = mappe.config[property] || defaultConfig[property]
     }
 
     mappe.validConfig = function (config) {
@@ -51,22 +54,32 @@
       fse.writeJsonSync(mappe.configPath, mappe.config)
     }
 
+    mappe.titleStyle = function (component) {
+      return mappe.config.components[component].title
+    }
+
+    mappe.extensionStyle = function (component, extension) {
+      return mappe.config.components[component].extensions[extension]
+    }
+
     mappe.generate = mappe.g = function (name, component, content) {
       mappe.read()
-      name = mappe.fileName(name, component || 'default')
+      component = component || 'default'
+      name = mappe.fileName(name, mappe.titleStyle(component))
       fse.mkdirsSync(mappe.path + name)
-      for (var extension in mappe.config.components[component || 'default']) {
-        fs.writeFileSync(mappe.path + mappe.filePath(name, extension, component || 'default'), content)
+      for (var extension in mappe.config.components[component].extensions) {
+        fs.writeFileSync(mappe.path + mappe.filePath(name, extension, component), content)
       }
-      return acho.success('Component: ' + name + ' generated')
+      acho.success('Component: ' + name + ' generated')
     }
 
     mappe.filePath = function (name, extension, component) {
-      return [name, mappe.addExtension(name, extension)].join('/')
+      var fileName = mappe.fileName(name, mappe.extensionStyle(component, extension), component)
+      return [name, mappe.addExtension(fileName, extension)].join('/')
     }
 
-    mappe.fileName = function (name, component) {
-      mappe.config.styles[component].forEach(function (style) {
+    mappe.fileName = function (name, styleName) {
+      mappe.config.styles[styleName].forEach(function (style) {
         name = changeCase[style](name)
       })
       return name
@@ -80,7 +93,7 @@
       acho.info(JSON.stringify({
         'config': mappe.config,
         'path': mappe.configPath,
-        'default style': mappe.default,
+        'default style': mappe.config.default,
         'version': mappe.version
       }))
     }

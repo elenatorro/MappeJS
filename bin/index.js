@@ -38,8 +38,7 @@
 
     var result
     try {
-      result = mappe[input.option](input.name, input.component)
-      log(result)
+      mappe[input.option](input.name, input.component)
     } catch(error) {
       log(error.message + '\n')
       log('Error: failed to %s.', input.option)

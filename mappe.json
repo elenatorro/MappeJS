@@ -1,17 +1,22 @@
 {
+  "default": "default",
   "styles": {
     "default": [
       "camelCase",
       "upperCaseFirst"
+    ],
+    "custom": [
+      "snakeCase",
+      "lowerCaseFirst"
     ]
   },
   "components": {
     "default": {
-      "js": "default"
+      "title": "custom",
+      "extensions": {
+        "js": "custom",
+        "css": "default"
+      }
     }
-  },
-  "default": [
-    "camelCase",
-    "upperCaseFirst"
-  ]
+  }
 }

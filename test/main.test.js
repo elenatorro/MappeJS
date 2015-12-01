@@ -22,7 +22,7 @@ describe('Read configuration from mappe.json: ', function () {
   })
 
   it('should set default config if it was not setted in the json file', function () {
-    assert.equal(mappe.default, 'default')
+    assert.equal(mappe.config.default, 'default')
     isValidConfig()
   })
 

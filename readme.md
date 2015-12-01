@@ -20,24 +20,25 @@ Component:
 
 ```
 {
+    default: 'default',
     styles: {
-      default: {
-        format: 'camelCase',
-        typeFormat: 'upperCaseFirst'
-      }
+      default: ['camelCase', 'upperCaseFirst']
     },
     components: {
       default: {
-        js: 'default'
+        title: 'default',
+        extensions: {
+          js: 'default'
+        }
       }
     }
   }
-
 ```
 
 ###Generate Component
 ```
-$ mappe generate default Index Component
+$ mappe generate default index component
+$ mappe g default index component
 ```
 
 Result:
@@ -46,3 +47,21 @@ Result:
 - IndexComponent/
  |_ IndexComponent.js
 ```
+####Available styles in [change-case npm package](https://www.npmjs.com/package/change-case)
+
+
+* upperCase
+* ucFirstCase
+* lcFirstCase
+* lowerCase
+* sentenceCase
+* titleCase
+* camelCase
+* pascalCase
+* snakeCase
+* paramCase
+* dotCase
+* pathCase
+* constantCase
+* swapCase
+
