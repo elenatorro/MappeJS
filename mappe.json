@@ -1,13 +1,17 @@
 {
   "styles": {
-    "default": {
-      "format": "camelCase",
-      "typeFormat": "lowerCaseFirst"
-    }
+    "default": [
+      "camelCase",
+      "upperCaseFirst"
+    ]
   },
   "components": {
     "default": {
       "js": "default"
     }
-  }
+  },
+  "default": [
+    "camelCase",
+    "upperCaseFirst"
+  ]
 }

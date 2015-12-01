@@ -3,12 +3,10 @@
   const fse = require('fs-extra')
   const fs = require('fs')
   const changeCase = require('change-case')
+  const Acho = require('acho')
   const defaultConfig = {
     styles: {
-      default: {
-        format: 'camelCase',
-        typeFormat: 'upperCaseFirst'
-      }
+      default: ['camelCase', 'upperCaseFirst']
     },
     components: {
       default: {
@@ -19,6 +17,8 @@
 
   const Mappe = function (path) {
     const mappe = {}
+    const acho = new Acho()
+
     mappe.path = (path || '.') + '/'
     mappe.version = '0.0.1'
     mappe.default = 'default'
@@ -29,6 +29,7 @@
       try {
         mappe.config = fse.readJsonSync(mappe.configPath, {throws: false}) || {}
       } catch (error) {
+        acho.warn('No mappe config, mappe.json file automatically generated with default config')
         mappe.errors[error.code]()
       }
       mappe.validConfig(mappe.config)
@@ -57,7 +58,7 @@
       for (var extension in mappe.config.components[component || 'default']) {
         fs.writeFileSync(mappe.path + mappe.filePath(name, extension, component || 'default'), content)
       }
-      return 'Component: ' + name + ' generated successfully'
+      return acho.success('Component: ' + name + ' generated')
     }
 
     mappe.filePath = function (name, extension, component) {
@@ -65,20 +66,23 @@
     }
 
     mappe.fileName = function (name, component) {
-      name = mappe.changeFormat(name, component)
-      name = mappe.changeTypeFormat(name, component)
+      mappe.config.styles[component].forEach(function (style) {
+        name = changeCase[style](name)
+      })
       return name
     }
 
     mappe.addExtension = function (name, extension) {
       return [name, extension].join('.')
     }
-    mappe.changeFormat = function (name, component) {
-      return changeCase[mappe.config.styles[component].format](name)
-    }
 
-    mappe.changeTypeFormat = function (name, component) {
-      return changeCase[mappe.config.styles[component].typeFormat](name)
+    mappe.info = function () {
+      acho.info(JSON.stringify({
+        'config': mappe.config,
+        'path': mappe.configPath,
+        'default style': mappe.default,
+        'version': mappe.version
+      }))
     }
 
     mappe.errors = {

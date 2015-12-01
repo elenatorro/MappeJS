@@ -19,6 +19,7 @@
   },
   "license": "MIT",
   "dependencies": {
+    "acho": "^2.4.0",
     "change-case": "^2.3.0",
     "fs": "0.0.2",
     "fs-extra": "^0.23.1",
