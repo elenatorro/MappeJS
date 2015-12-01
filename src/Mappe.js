@@ -51,7 +51,7 @@
       fse.writeJsonSync(mappe.configPath, mappe.config)
     }
 
-    mappe.generate = function (name, component, content) {
+    mappe.generate = mappe.g = function (name, component, content) {
       mappe.read()
       name = mappe.fileName(name, component || 'default')
       fse.mkdirsSync(mappe.path + name)

@@ -21,8 +21,11 @@
       log('mappe v%s', mappe.version)
       log([
         '\nUsage:\n',
-        '\tGenerates a component with certain setup\n',
-        '\tmappe [generate] component name',
+        '\tmappe generate [style name] [component name you want]',
+        '\tmappe g [style name] [component name you want]',
+        '\t --> Generates a component with certain setup\n',
+        '\tmappe info',
+        '\t --> Shows current mappe setup\n',
       ].join('\n'))
       return process.exit(1)
     }

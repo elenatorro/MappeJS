@@ -38,6 +38,12 @@ describe('Read configuration from mappe.json: ', function () {
     assert(fs.existsSync('./test/Index/Index.js'))
   })
 
+  it('should generate a directory for a given component using the default configuration using only "g"', function () {
+    mappe.g('index2')
+    assert(fs.existsSync('./test/Index2'))
+    assert(fs.existsSync('./test/Index2/Index2.js'))
+  })
+
   it('should generate a directory for a given component using the default configuration 2', function () {
     mappe.generate('index component')
     assert(fs.existsSync('./test/IndexComponent'))
@@ -47,6 +53,7 @@ describe('Read configuration from mappe.json: ', function () {
   after(function () {
     fs.remove(mappeFileConfig)
     fs.removeSync([mappeTestPath, 'Index'].join('/'))
+    fs.removeSync([mappeTestPath, 'Index2'].join('/'))
     fs.removeSync([mappeTestPath, 'IndexComponent'].join('/'))
   })
 })
