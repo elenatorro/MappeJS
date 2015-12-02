@@ -12,7 +12,6 @@ body, h1, h2, h3, a, button, p {
 	padding-left: 50px;
 }
 
-
 .main-container > .grid.group > .col {
 	margin-top: 100px;
 	margin-bottom: 50px;
@@ -121,5 +120,10 @@ body, h1, h2, h3, a, button, p {
 	50% {
 		top: -40px;
 	}
+}
+
+.icon {
+	width: 60px;
+	display: inline-block;
 }
 
