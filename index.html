@@ -5,6 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
   <link rel="stylesheet" href="bower_components/phoenixframework/dist/src/phoenixfw.css">
+  <link rel="stylesheet" href="bower_components/prism/themes/prism-tomorrow.css">
   <link rel="stylesheet" href="assets/assets.css">
 </head>
 <body id="page-body">
@@ -22,6 +23,8 @@
       <div class="col three">
         <h1>MappeJS</h1>
         <h2 id="text-title">CLI tool to manage your project files easier</h2>
+<pre class="language-js"><code class="language-js"><xmp>$ npm install -g mappe
+</xmp></code></pre>
       </div>
       <div class="col three">
         <div class="folder">
@@ -34,11 +37,81 @@
   </div>
   <div class="container separate">
     <section class="grid group">
-      <div class="col four">
-        <h3>Current Features</h3>
-        <p>CLI tool to manage your project files easier</p>
+      <h2>Current Features</h2>
+      <div class="col three">
+        <h3>Set your default configuration</h3>
+        <p>mappe.json</p>
       </div>
-    </section>
+      <div class="col three">
+<pre class="language-js"><code class="language-js"><xmp>{
+  "default": "default",
+  "styles": {
+    "default": [
+      "camelCase",
+      "upperCaseFirst"
+    ],
+    "custom": [
+      "snakeCase",
+      "lowerCaseFirst"
+    ]
+  },
+  "components": {
+    "default": {
+      "title": "default",
+      "extensions": {
+        "js": "custom",
+        "css": "default"
+      }
+    }
+  }
+}
+</xmp></code></pre>
+      </div>
+</section>
+<section class="grid group">
+  <div class="col three">
+        <h3>Generate a complete component</h3>
+        <p>Folder and files named with the same name, following the rules setted in the configuration file</p>
+        <p>Result:</p>
+        <p>__ ./ThisIsAnExample/</p>
+        <ul>
+          <li>|_ this_is_an_example.js</li>
+          <li>|_ ThisIsAnExample.css</li>
+        </ul>
+      </div>
+      <div class="col three">
+<pre class="language-js"><code class="language-js"><xmp>$ mappe generate default this is an example
+$ mappe g default this is an example
+</xmp></code></pre>
+      </div>
+</section>
+<section class="grid group">
+  <div class="col three">
+        <h3>Create a folder</h3>
+        <p>Creates a folder following the rules setted in the configuration file</p>
+        <p>Result:</p>
+        <p>__ ./ThisIsAnExample/</p>
+      </div>
+      <div class="col three">
+<pre class="language-js"><code class="language-js"><xmp>$ mappe folder default this is an example
+</xmp></code></pre>
+      </div>
+</section>
+<section class="grid group">
+  <div class="col three">
+        <h3>Create a file</h3>
+        <p>Creates a file inside a given folder following the rules setted in the configuration file</p>
+        <p>Result:</p>
+        <p>__ ./ThisIsAnExample/</p>
+        <ul>
+          <li>|_ ThisIsAnotherExample.js</li>
+        </ul>
+      </div>
+      <div class="col three">
+<pre class="language-js"><code class="language-js"><xmp>$ mappe file default ThisIsAnExample js this is another example
+</xmp></code></pre>
+      </div>
+</section>
   </div>
   <footer class="bg-gray5">
     <section class="grid group">
@@ -48,6 +121,7 @@
     </section>
   </footer>
   <script type="text/javascript" src="bower_components/lookjs/lib/Look.js"></script>
+  <script type="text/javascript" src="bower_components/prism/prism.js"></script>
   <script type="text/javascript" src="assets/assets.js"></script>
 </body>
 </html5>

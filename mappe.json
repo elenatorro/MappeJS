@@ -12,7 +12,7 @@
   },
   "components": {
     "default": {
-      "title": "custom",
+      "title": "default",
       "extensions": {
         "js": "custom",
         "css": "custom"
