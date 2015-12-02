@@ -6,7 +6,7 @@
       "upperCaseFirst"
     ],
     "custom": [
-      "snakeCase",
+      "camelCase",
       "lowerCaseFirst"
     ]
   },
@@ -15,7 +15,7 @@
       "title": "custom",
       "extensions": {
         "js": "custom",
-        "css": "default"
+        "css": "custom"
       }
     }
   }
