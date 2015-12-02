@@ -33,27 +33,43 @@ describe('Read configuration from mappe.json: ', function () {
   })
 
   it('should generate a directory for a given component using the default configuration', function () {
-    mappe.generate('index')
+    mappe.generate('index', 'default')
     assert(fs.existsSync('./test/Index'))
     assert(fs.existsSync('./test/Index/Index.js'))
   })
 
   it('should generate a directory for a given component using the default configuration using only "g"', function () {
-    mappe.g('index2')
+    mappe.g('index2', 'default')
     assert(fs.existsSync('./test/Index2'))
     assert(fs.existsSync('./test/Index2/Index2.js'))
   })
 
-  it('should generate a directory for a given component using the default configuration 2', function () {
-    mappe.generate('index component')
+  it('should generate a directory for a given component using the default configuration', function () {
+    mappe.generate('index component', 'default')
     assert(fs.existsSync('./test/IndexComponent'))
     assert(fs.existsSync('./test/IndexComponent/IndexComponent.js'))
+  })
+
+  it('should create an empty directory for using default configuration', function () {
+    mappe.folder('index folder', 'default')
+    assert(fs.existsSync('./test/IndexFolder'))
+  })
+
+  it('should create a file for a certain path using default configuration', function () {
+    mappe.file('IndexFolder', 'js', 'index file', 'default')
+    assert(fs.existsSync('./test/IndexFolder/IndexFile.js'))
+  })
+
+  it('should create a file for each file for a certain path using default configuration', function () {
+    mappe.files('IndexFolder', 'index files', 'default')
+    assert(fs.existsSync('./test/IndexFolder/IndexFiles.js'))
   })
 
   after(function () {
     fs.remove(mappeFileConfig)
     fs.removeSync([mappeTestPath, 'Index'].join('/'))
     fs.removeSync([mappeTestPath, 'Index2'].join('/'))
+    // fs.removeSync([mappeTestPath, 'IndexFolder'].join('/'))
     fs.removeSync([mappeTestPath, 'IndexComponent'].join('/'))
   })
 })
