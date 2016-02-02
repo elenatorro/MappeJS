@@ -7,13 +7,15 @@
   const defaultConfig = {
     default: 'default',
     styles: {
-      default: ['camelCase', 'upperCaseFirst']
+      default: ['camelCase', 'lowerCaseFirst']
     },
     components: {
       default: {
         title: 'default',
         extensions: {
-          js: 'default'
+          js: 'default',
+          css: 'default',
+          html: 'default'
         }
       }
     }
@@ -125,7 +127,7 @@
     mappe.files = function (folder, name, component) {
       mappe.read()
       for (var extension in mappe.config.components[component].extensions) {
-        extensionStyle = mappe.config.components[component].extensions[extension]
+        var extensionStyle = mappe.config.components[component].extensions[extension]
         name = mappe.changeName(name, extensionStyle)
         fs.writeFileSync(mappe.path + mappe.filePath(folder, extension, component, name))
         acho.success('File ' + name + '.' + extension + ' in ' + folder + 'created')
