@@ -8,14 +8,18 @@
     "custom": [
       "camelCase",
       "lowerCaseFirst"
+    ],
+    "titles": [
+      "camelCase",
+      "upperCaseFirst"
     ]
   },
   "components": {
-    "default": {
-      "title": "default",
+    "d": {
+      "title": "titles",
       "extensions": {
-        "js": "custom",
-        "css": "custom"
+        "js": "default",
+        "css": "default"
       }
     }
   }
