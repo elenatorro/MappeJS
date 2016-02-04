@@ -1,6 +1,5 @@
 var Mappe = require('../src/Mappe.js')
 var assert = require('assert')
-var should = require('should')
 var fs = require('fs-extra')
 
 var mappe = Mappe(__dirname)
@@ -34,42 +33,42 @@ describe('Read configuration from mappe.json: ', function () {
 
   it('should generate a directory for a given component using the default configuration', function () {
     mappe.generate('index', 'default')
-    assert(fs.existsSync('./test/Index'))
-    assert(fs.existsSync('./test/Index/Index.js'))
+    assert(fs.existsSync('./test/index'))
+    assert(fs.existsSync('./test/index/index.js'))
   })
 
   it('should generate a directory for a given component using the default configuration using only "g"', function () {
     mappe.g('index2', 'default')
-    assert(fs.existsSync('./test/Index2'))
-    assert(fs.existsSync('./test/Index2/Index2.js'))
+    assert(fs.existsSync('./test/index2'))
+    assert(fs.existsSync('./test/index2/index2.js'))
   })
 
   it('should generate a directory for a given component using the default configuration', function () {
     mappe.generate('index component', 'default')
-    assert(fs.existsSync('./test/IndexComponent'))
-    assert(fs.existsSync('./test/IndexComponent/IndexComponent.js'))
+    assert(fs.existsSync('./test/indexComponent'))
+    assert(fs.existsSync('./test/indexComponent/indexComponent.js'))
   })
 
   it('should create an empty directory for using default configuration', function () {
     mappe.folder('index folder', 'default')
-    assert(fs.existsSync('./test/IndexFolder'))
+    assert(fs.existsSync('./test/indexFolder'))
   })
 
   it('should create a file for a certain path using default configuration', function () {
-    mappe.file('IndexFolder', 'js', 'index file', 'default')
-    assert(fs.existsSync('./test/IndexFolder/IndexFile.js'))
+    mappe.file('indexFolder', 'js', 'index file', 'default')
+    assert(fs.existsSync('./test/indexFolder/indexFile.js'))
   })
 
   it('should create a file for each file for a certain path using default configuration', function () {
-    mappe.files('IndexFolder', 'index files', 'default')
-    assert(fs.existsSync('./test/IndexFolder/IndexFiles.js'))
+    mappe.files('indexFolder', 'index files', 'default')
+    assert(fs.existsSync('./test/indexFolder/indexFiles.js'))
   })
 
   after(function () {
     fs.remove(mappeFileConfig)
-    fs.removeSync([mappeTestPath, 'Index'].join('/'))
-    fs.removeSync([mappeTestPath, 'Index2'].join('/'))
-    // fs.removeSync([mappeTestPath, 'IndexFolder'].join('/'))
-    fs.removeSync([mappeTestPath, 'IndexComponent'].join('/'))
+    fs.removeSync([mappeTestPath, 'index'].join('/'))
+    fs.removeSync([mappeTestPath, 'index2'].join('/'))
+    fs.removeSync([mappeTestPath, 'indexFolder'].join('/'))
+    fs.removeSync([mappeTestPath, 'indexComponent'].join('/'))
   })
 })
