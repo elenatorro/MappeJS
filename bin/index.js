@@ -30,8 +30,12 @@
     input.component = process.argv[3]
     input.extension = process.argv[4]
     input.folder = process.argv[5]
-    input.name = process.splice(6)
+    input.name = process.argv.splice(6)
     mappe.file(input.folder, input.extension, input.name, input.component)
+  }
+
+  functions.info = function () {
+    mappe.info()
   }
 
   var main = function () {

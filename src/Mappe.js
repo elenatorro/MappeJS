@@ -86,12 +86,10 @@
     /* Main Functions */
 
     mappe.info = function () {
-      acho.info(JSON.stringify({
-        'config': mappe.config,
-        'path': mappe.configPath,
-        'default style': mappe.config.default,
-        'version': mappe.version
-      }))
+      acho.info('config: ' + JSON.stringify(mappe.config))
+      acho.info('path: ' + mappe.configPath)
+      acho.info('default name: ' + mappe.config.default)
+      acho.info('version: ' + mappe.version)
     }
 
     mappe.generate = mappe.g = function (name, component) {
@@ -113,7 +111,7 @@
 
     mappe.file = function (folder, extension, name, component) {
       mappe.read()
-      var extensionStyle = mappe.config.components[component].extensions[extension]
+      var extensionStyle = mappe.config.components[component].extensions[extension] || 'default'
       if (extensionStyle) {
         folder = mappe.changeName(folder, mappe.titleStyle(component))
         name = mappe.filePath(folder, extension, component, mappe.changeName(name, extensionStyle))

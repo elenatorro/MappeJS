@@ -64,6 +64,10 @@ describe('Read configuration from mappe.json: ', function () {
     assert(fs.existsSync('./test/indexFolder/indexFiles.js'))
   })
 
+  it('should display main mappe info', function () {
+    assert(mappe.info)
+  })
+
   after(function () {
     fs.remove(mappeFileConfig)
     fs.removeSync([mappeTestPath, 'index'].join('/'))
