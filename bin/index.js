@@ -16,7 +16,7 @@
   functions.folder = function (input) {
     input.component = process.argv[3]
     input.name = process.argv.splice(4)
-    mappe.folder(input.name, input.omponent)
+    mappe.folder(input.name, input.component)
   }
 
   functions.files = function (input) {
