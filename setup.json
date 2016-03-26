@@ -1,0 +1,23 @@
+{
+  "default": "another",
+  "styles": {
+    "another": [
+      "camelCase",
+      "lowerCaseFirst"
+    ],
+    "beautiful" : [
+      "snakeCase"
+    ]
+  },
+  "components": {
+    "d": {
+      "title": "default",
+      "extensions": {
+        "js": {
+          "style": "beautiful",
+          "src": "/content/javascript_module.js"
+        }
+      }
+    }
+  }
+}
