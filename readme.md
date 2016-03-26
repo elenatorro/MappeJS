@@ -26,9 +26,12 @@ Component:
     },
     components: {
       default: {
-        title: 'default',
+        style: 'default',
         extensions: {
-          js: 'default'
+          js: {
+            style : 'default',
+            src: false // 'src/to/file/content'
+          }
         }
       }
     }
@@ -47,8 +50,12 @@ Result:
 - IndexComponent/
  |_ IndexComponent.js
 ```
-####Available styles in [change-case npm package](https://www.npmjs.com/package/change-case)
 
+If you set a src path for an extension, it will be created with the content of the file found in this path. It's perfect for generating boilerplates or file structures by default.
+
+More info at [https://elenatorro.github.io/MappeJS](https://elenatorro.github.io/MappeJS)
+
+####Available styles in [change-case npm package](https://www.npmjs.com/package/change-case)
 
 * upperCase
 * ucFirstCase
