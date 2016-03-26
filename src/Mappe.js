@@ -9,7 +9,7 @@
     'styles': {
       'default': [
         'camelCase',
-        'upperCaseFirst'
+        'lowerCaseFirst'
       ]
     },
     'components': {
@@ -39,10 +39,6 @@
 
     /* MESSAGES */
 
-    mappe.errors = {
-      'ENOENT': mappe.write
-    }
-
     mappe.exceptions = {
       'NOT_FOUND_COMPONENT': function (component) {
         return '"' + component + '" component not found'
@@ -54,89 +50,23 @@
 
     mappe.messages = {
       'GENERATED_COMPONENT': function (name) {
-        return 'Component: "' + name + '" generated'
+        return 'Component: "' + name + '" generated successfully'
       },
       'GENERATED_FILE': function (name) {
         return 'File: "' + name + '" generated successfully'
+      },
+      'GENERATED_FOLDER': function (name) {
+        return 'Folder: "' + name + '" generated successfully'
+      },
+      'GENERATED_AUTOMATICALLY': function () {
+        return 'No mappe config, mappe.json file automatically generated with default config'
+      },
+      'READ_CONFIG': function () {
+        return 'mappe config read'
       }
     }
 
     /* UTILS */
-
-    mappe.read = function () {
-      try {
-        mappe.config = fse.readJsonSync(mappe.configPath, {throws: false}) || {}
-      } catch (error) {
-        acho.warn('No mappe config, mappe.json file automatically generated with default config')
-        mappe.errors[error.code]()
-      }
-      mappe.validConfig(mappe.config)
-      mappe.write()
-    }
-
-    mappe.setup = function (configPath) {
-      mappe.configPath = configPath || 'mappe.json'
-      mappe.read()
-      mappe.info()
-    }
-
-    mappe.setDefault = function (config, property) {
-      mappe.config[property] = mappe.config[property] || defaultConfig[property]
-    }
-
-    mappe.validConfig = function (config) {
-      mappe.setDefault(config, 'components')
-      mappe.setDefault(config.components, 'default')
-      mappe.setDefault(config, 'styles')
-      mappe.setDefault(config.styles, 'default')
-    }
-
-    mappe.write = function () {
-      fse.writeJsonSync(mappe.configPath, mappe.config)
-    }
-
-    mappe.componentStyleExists = function (component) {
-      return mappe.config.styles[component]
-    }
-
-    mappe.componentStyle = function (component) {
-      if (mappe.componentStyleExists(component)) {
-        return mappe.config.components[component].style
-      } else {
-        throw mappe.exceptions.NOT_FOUND_COMPONENT(component)
-      }
-    }
-
-    mappe.extensionStyle = function (component, extension) {
-      if (!mappe.config.components[component]) {
-        throw mappe.errors.NOT_FOUND_COMPONENT(component)
-      }
-      if (!mappe.config.components[component].extensions[extension]) {
-        throw mappe.exceptions.WRONG_COMPONENT_EXTENSION(component, extension)
-      }
-
-      return mappe.config.components[component].extensions[extension].style || 'default'
-    }
-
-    mappe.filePath = function (name, extension, component, filename) {
-      try {
-        filename = filename || mappe.changeName(name, mappe.extensionStyle(component, extension), component)
-        return [name, mappe.addExtension(filename, extension)].join('/')
-      } catch (error) {
-        acho.error(error)
-      }
-    }
-
-    mappe.changeName = function (name, styleName) {
-      mappe.config.styles[styleName].forEach(function (style) {
-        name = changeCase[style](name)
-      })
-      return name
-    }
-
-    mappe.addExtension = function (name, extension) {
-      return [name, extension].join('.')
-    }
 
     function getExtensionContent (component, extension) {
       if (mappe.config.components[component].extensions[extension].src) {
@@ -147,17 +77,21 @@
     }
 
     function writeExtensions (folder, component, name) {
-      for (var extension in mappe.config.components[component].extensions) {
-        fs.writeFileSync(mappe.path + mappe.filePath(folder, extension, component, name), getExtensionContent(component, extension))
+      var extension, filePath
+      folder = changeName(folder, componentStyle(component))
+      name = name || folder
+      for (extension in mappe.config.components[component].extensions) {
+        filePath = getFileName(folder, extension, component, name)
+        fs.writeFileSync(mappe.path + filePath, getExtensionContent(component, extension))
+        acho.success(mappe.messages.GENERATED_FILE(filePath))
       }
-      acho.success(mappe.messages.GENERATED_COMPONENT(folder))
     }
 
     function writeFile (folder, extension, name, component) {
       try {
-        var extensionStyle = mappe.extensionStyle(component, extension)
-        folder = mappe.changeName(folder, mappe.componentStyle(component))
-        name = mappe.filePath(folder, extension, component, mappe.changeName(name, extensionStyle))
+        var extensionStyle = getExtensionStyle(component, extension)
+        folder = changeName(folder, componentStyle(component))
+        name = getFileName(folder, extension, component, changeName(name, extensionStyle))
         fs.writeFileSync(mappe.path + name, getExtensionContent(component, extension))
         acho.success(mappe.messages.GENERATED_FILE(name))
       } catch (error) {
@@ -165,8 +99,69 @@
       }
     }
 
-    /* Main Functions */
+    function addExtension (name, extension) {
+      return [name, extension].join('.')
+    }
 
+    function setDefault (config, property) {
+      mappe.config[property] = mappe.config[property] || defaultConfig[property]
+    }
+
+    function setDefaultConfig (config) {
+      setDefault(config, 'components')
+      setDefault(config.components, 'default')
+      setDefault(config, 'styles')
+      setDefault(config.styles, 'default')
+    }
+
+    function write () {
+      fse.writeJsonSync(mappe.configPath, mappe.config)
+    }
+
+    function componentStyleExists (component) {
+      return mappe.config.styles[component]
+    }
+
+    function componentStyle (component) {
+      if (componentStyleExists(component)) {
+        return mappe.config.components[component].style
+      } else {
+        throw mappe.exceptions.NOT_FOUND_COMPONENT(component)
+      }
+    }
+
+    function getExtensionStyle (component, extension) {
+      if (!mappe.config.components[component]) {
+        throw mappe.errors.NOT_FOUND_COMPONENT(component)
+      }
+      if (!mappe.config.components[component].extensions[extension]) {
+        throw mappe.exceptions.WRONG_COMPONENT_EXTENSION(component, extension)
+      }
+
+      return mappe.config.components[component].extensions[extension].style || 'default'
+    }
+
+    function getFileName (name, extension, component, filename) {
+      try {
+        if (filename) {
+          filename = changeName(filename, getExtensionStyle(component, extension), component)
+        } else {
+          filename = changeName(name, getExtensionStyle(component, extension), component)
+        }
+        return [name, addExtension(filename, extension)].join('/')
+      } catch (error) {
+        acho.error(error)
+      }
+    }
+
+    function changeName (name, styleName) {
+      mappe.config.styles[styleName].forEach(function (style) {
+        name = changeCase[style](name)
+      })
+      return name
+    }
+
+    /* Main Mappe Functions */
     mappe.info = function () {
       acho.info('config: ' + JSON.stringify(mappe.config))
       acho.info('path: ' + mappe.configPath)
@@ -174,12 +169,30 @@
       acho.info('version: ' + mappe.version)
     }
 
+    mappe.read = function () {
+      try {
+        mappe.config = fse.readJsonSync(mappe.configPath, {throws: false}) || {}
+      } catch (error) {
+        acho.warn(mappe.messages.GENERATED_AUTOMATICALLY())
+      }
+      setDefaultConfig(mappe.config)
+      write()
+      acho.success(mappe.messages.READ_CONFIG())
+    }
+
+    mappe.setup = function (configPath) {
+      mappe.configPath = configPath || 'mappe.json'
+      mappe.read()
+      mappe.info()
+    }
+
     mappe.generate = mappe.g = function (name, component) {
       mappe.read()
       try {
-        name = mappe.changeName(name, mappe.componentStyle(component))
+        name = changeName(name, componentStyle(component))
         fse.mkdirsSync(mappe.path + name)
         writeExtensions(name, component)
+        acho.success(mappe.messages.GENERATED_COMPONENT(name))
       } catch (error) {
         acho.error(error)
       }
@@ -187,9 +200,13 @@
 
     mappe.folder = function (name, component) {
       mappe.read()
-      name = mappe.changeName(name, mappe.componentStyle(component))
-      fse.mkdirsSync(mappe.path + name)
-      acho.success('Folder: "' + name + '" generated')
+      try {
+        name = changeName(name, componentStyle(component))
+        fse.mkdirsSync(mappe.path + name)
+        acho.success(mappe.messages.GENERATED_FOLDER(name))
+      } catch (error) {
+        acho.error(error)
+      }
     }
 
     mappe.file = function (folder, extension, name, component) {
@@ -203,7 +220,11 @@
 
     mappe.files = function (folder, name, component) {
       mappe.read()
-      writeExtensions(folder, component, name)
+      try {
+        writeExtensions(folder, component, name)
+      } catch (error) {
+        acho.error(error)
+      }
     }
 
     return mappe

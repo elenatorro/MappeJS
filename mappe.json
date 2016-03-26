@@ -16,11 +16,11 @@
       "extensions": {
         "js": {
           "style": "custom",
-          "src": "src/contentsample.txt"
+          "src": false
         },
         "css": {
           "style": "default",
-          "src": "src/contentsample.txt"
+          "src": false
         }
       }
     }
