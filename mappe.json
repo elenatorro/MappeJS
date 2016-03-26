@@ -6,16 +6,22 @@
       "upperCaseFirst"
     ],
     "custom": [
-      "camelCase",
+      "snakeCase",
       "lowerCaseFirst"
     ]
   },
   "components": {
     "default": {
-      "title": "default",
+      "style": "custom",
       "extensions": {
-        "js": "custom",
-        "css": "custom"
+        "js": {
+          "style": "custom",
+          "src": "src/contentsample.txt"
+        },
+        "css": {
+          "style": "default",
+          "src": "src/contentsample.txt"
+        }
       }
     }
   }
