@@ -1,12 +1,9 @@
 #MappeJS 
 [![Build Status](https://travis-ci.org/elenatorro/MappeJS.svg?branch=master)](https://travis-ci.org/elenatorro/MappeJS)
 [![Last Version](https://img.shields.io/github/tag/elenatorro/MappeJS.svg)]()
-[![Donate](https://img.shields.io/badge/donate-paypal-blue.svg?style=flat-square)](https://paypal.me/elenatorro)
-[![NPM Status](http://img.shields.io/npm/dm/mappe.svg?style=flat-square)](https://www.npmjs.org/package/mappe)
-[![Dependency status](http://img.shields.io/david/elenatorro/MappeJS.svg?style=flat-square)](https://david-dm.org/elenatorro/MappeJS)
-
-
-**[Under Construction]**
+[![Donate](https://img.shields.io/badge/donate-paypal-blue.svg)](https://paypal.me/elenatorro)
+[![NPM Status](http://img.shields.io/npm/dm/mappe.svg)](https://www.npmjs.org/package/mappe)
+[![Dependency status](http://img.shields.io/david/elenatorro/MappeJS.svg)](https://david-dm.org/elenatorro/MappeJS)
 
 CLI tool that helps with the process of managing project folders and files based on components. Let's say you're building a web application and you want to create a new component.
 
