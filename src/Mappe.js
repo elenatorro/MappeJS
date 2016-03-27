@@ -35,7 +35,7 @@
     mappe.path = (path || '.') + '/'
     mappe.version = '0.0.1'
     mappe.config = defaultConfig
-    mappe.configPath = 'mappe.json'
+    mappe.configPath = mappe.path + 'mappe.json'
 
     /* MESSAGES */
 
