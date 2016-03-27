@@ -53,6 +53,8 @@ Result:
 
 If you set a src path for an extension, it will be created with the content of the file found in this path. It's perfect for generating boilerplates or file structures by default.
 
+![Mappe example](assets/mappeconfig.gif)
+
 More info at [https://elenatorro.github.io/MappeJS](https://elenatorro.github.io/MappeJS)
 
 ####Available styles in [change-case npm package](https://www.npmjs.com/package/change-case)
