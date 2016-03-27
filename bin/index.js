@@ -20,22 +20,27 @@
   }
 
   functions.files = function (input) {
-    input.component = process.argv[3]
     input.folder = process.argv[4]
+    input.component = process.argv[3]
     input.name = process.argv.splice(5)
     mappe.files(input.folder, input.name, input.component)
   }
 
   functions.file = function (input) {
     input.component = process.argv[3]
-    input.extension = process.argv[4]
-    input.folder = process.argv[5]
+    input.folder = process.argv[4]
+    input.extension = process.argv[5]
     input.name = process.argv.splice(6)
     mappe.file(input.folder, input.extension, input.name, input.component)
   }
 
   functions.info = function () {
     mappe.info()
+  }
+
+  functions.setup = function (input) {
+    input.config = process.argv[3]
+    mappe.setup(input.config)
   }
 
   var main = function () {
@@ -50,11 +55,19 @@
       log('mappe v%s', mappe.version)
       log([
         '\nUsage:\n',
-        '\tmappe generate [style name] [component name you want]',
-        '\tmappe g [style name] [component name you want]',
-        '\t --> Generates a component with certain setup\n',
+        '\tmappe generate [component name] [files name]',
+        '\tmappe g [component name] [files name]',
+        '\t --> Generates a component folder with its files\n',
+        '\tmappe folder [component name] [folder name]',
+        '\t --> Creates a folder with a component syntax\n',
+        '\tmappe files [component name] [folder name] [files name]',
+        '\t --> Generates all the files in a component inside a certain file\n',
+        '\tmappe file [component name] [folder name] [extension] [file name]',
+        '\t --> Generates a single file in a component inside a certain file, given its extension\n',
         '\tmappe info',
-        '\t --> Shows current mappe setup\n'
+        '\t --> Shows current mappe setup\n',
+        '\tmappe setup [config path]',
+        '\t --> Loads the given setup, or the default config if no file is passed\n'
       ].join('\n'))
       return process.exit(1)
     }

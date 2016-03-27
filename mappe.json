@@ -16,7 +16,7 @@
       "extensions": {
         "js": {
           "style": "custom",
-          "src": false
+          "src": "not found"
         },
         "css": {
           "style": "default",

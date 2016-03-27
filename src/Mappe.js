@@ -35,7 +35,7 @@
     mappe.path = (path || '.') + '/'
     mappe.version = '0.0.1'
     mappe.config = defaultConfig
-    mappe.configPath = mappe.path + 'mappe.json'
+    mappe.configPath = 'mappe.json'
 
     /* MESSAGES */
 
@@ -119,7 +119,7 @@
     }
 
     function componentStyleExists (component) {
-      return mappe.config.styles[component]
+      return mappe.config.styles[mappe.config.components[component].style]
     }
 
     function componentStyle (component) {
@@ -131,6 +131,7 @@
     }
 
     function getExtensionStyle (component, extension) {
+      mappe.read()
       if (!mappe.config.components[component]) {
         throw mappe.errors.NOT_FOUND_COMPONENT(component)
       }
