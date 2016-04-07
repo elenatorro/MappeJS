@@ -12,4 +12,5 @@ run (){
 
 ## Main
 run \
-test/main.test.js
+test/main.test.js \
+test/remote.test.js

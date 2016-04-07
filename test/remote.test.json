@@ -1,0 +1,24 @@
+{
+  "default": "default",
+  "styles": {
+    "default": [
+      "camelCase",
+      "upperCaseFirst"
+    ]
+  },
+  "components": {
+    "default": {
+      "style": "default",
+      "extensions": {
+        "js": {
+          "style": "default",
+          "src": false
+        },
+        "css": {
+          "style": "default",
+          "src": false
+        }
+      }
+    }
+  }
+}
