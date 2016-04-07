@@ -76,6 +76,8 @@
       }
     }
 
+    mappe.getExtensionContent = getExtensionContent
+
     function writeExtensions (folder, component, name) {
       var extension, filePath
       folder = changeName(folder, componentStyle(component))
